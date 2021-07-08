@@ -20,7 +20,6 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
   },
   menuButton: {
-    marginRight: theme.spacing(2),
     color: theme.palette.text.primary,
   },
   title: {
@@ -41,27 +40,32 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "2px",
     border: "2px solid",
     padding: theme.spacing(0.5, 3.8),
+    [theme.breakpoints.down("sm")]: {
+      padding: theme.spacing(0.4, 2.5),
+    },
   },
   logo: {
-    display: "inline-block",
     flexGrow: 1,
     width: 143,
     height: 32,
-    fontWeight: 500,
+    [theme.breakpoints.down("sm")]: {
+      width: 123,
+      height: 22,
+    },
   },
 }));
 //functional component
 const Navbar = () => {
   const classes = useStyles();
 
-  //responsive menu drawer
+  //responsive menu drawer state
   const [isDrawerOpen, setisDrawerOpen] = useState({
     top: false,
     left: false,
     bottom: false,
     right: false,
   });
-
+  //function to control menu drawer
   const toggleDrawer = (anchor, open) => (event) => {
     if (
       event &&
@@ -73,7 +77,7 @@ const Navbar = () => {
 
     setisDrawerOpen({ ...isDrawerOpen, [anchor]: open });
   };
-
+  //render to ui
   return (
     <div className={classes.root}>
       <AppBar
