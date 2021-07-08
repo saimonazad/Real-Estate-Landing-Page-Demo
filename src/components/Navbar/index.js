@@ -40,7 +40,6 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "2px",
     border: "2px solid",
     padding: theme.spacing(0.5, 3.8),
-    fontSize: 17,
   },
   logo: {
     display: "inline-block",

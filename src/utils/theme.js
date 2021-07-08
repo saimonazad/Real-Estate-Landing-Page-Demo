@@ -18,6 +18,7 @@ const theme = createTheme({
     },
     text: {
       primary: "#272727",
+      secondary: "#616161",
     },
   },
   overrides: {
