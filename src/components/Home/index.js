@@ -15,11 +15,17 @@ const useStyles = makeStyles((theme) => ({
   header: {
     marginTop: 100,
     textAlign: "center",
+    [theme.breakpoints.down("sm")]: {
+      marginTop: 50,
+    },
   },
   title: {
     fontSize: 55,
     fontWeight: 500,
     marginBottom: 32,
+    [theme.breakpoints.down("sm")]: {
+      fontSize: 30,
+    },
   },
   subtitle: {
     fontSize: 19,
@@ -27,6 +33,9 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 400,
     color: theme.palette.text.secondary,
     marginBottom: 40,
+    [theme.breakpoints.down("sm")]: {
+      fontSize: 15,
+    },
   },
   result__box: {
     marginTop: 30,
