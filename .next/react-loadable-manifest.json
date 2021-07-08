@@ -4,5 +4,11 @@
     "files": [
       "static/chunks/node_modules_next_dist_client_dev_noop_js.js"
     ]
+  },
+  "index.js -> ../components/Home": {
+    "id": "./src/components/Home/index.js",
+    "files": [
+      "static/chunks/src_components_Home_index_js.js"
+    ]
   }
 }

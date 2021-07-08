@@ -1,0 +1,12 @@
+@font-face {
+  font-family: "Gordita";
+  font-weight: normal;
+  font-style: normal;
+  src: url("./Gordita-Regular.ttf");
+}
+@font-face {
+  font-family: "Gordita";
+  font-weight: 500;
+  font-style: normal;
+  src: url("./Gordita-Medium.ttf");
+}
