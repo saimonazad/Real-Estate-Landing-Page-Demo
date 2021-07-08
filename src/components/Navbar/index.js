@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 //import material ui elements
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -8,7 +8,7 @@ import Link from "@material-ui/core/Link";
 import Box from "@material-ui/core/Box";
 import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
-
+import ResponsiveMenuDrawer from "./ResponsiveDrawer";
 //import icons
 import MenuIcon from "@material-ui/icons/Menu";
 import { Hidden } from "@material-ui/core";
@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
   },
   menuButton: {
     marginRight: theme.spacing(2),
+    color: theme.palette.text.primary,
   },
   title: {
     flexGrow: 1,
@@ -53,6 +54,26 @@ const useStyles = makeStyles((theme) => ({
 const Navbar = () => {
   const classes = useStyles();
 
+  //responsive menu drawer
+  const [isDrawerOpen, setisDrawerOpen] = useState({
+    top: false,
+    left: false,
+    bottom: false,
+    right: false,
+  });
+
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (
+      event &&
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+
+    setisDrawerOpen({ ...isDrawerOpen, [anchor]: open });
+  };
+
   return (
     <div className={classes.root}>
       <AppBar
@@ -61,8 +82,9 @@ const Navbar = () => {
         color="primary"
       >
         <Toolbar>
-          <Hidden xsUp>
+          <Hidden mdUp>
             <IconButton
+              onClick={toggleDrawer("left", true)}
               edge="start"
               className={classes.menuButton}
               color="inherit"
@@ -74,17 +96,19 @@ const Navbar = () => {
           <Box flexGrow={1}>
             <img className={classes.logo} src="/assets/housen.svg" />
           </Box>
-          <div className={classes.navLinks}>
-            <Link href="#" color="inherit">
-              Buy a house
-            </Link>
-            <Link href="#" color="inherit">
-              Rent a house
-            </Link>
-            <Link href="#" color="inherit">
-              Mortgage
-            </Link>
-          </div>
+          <Hidden smDown>
+            <Box className={classes.navLinks}>
+              <Link href="#" color="inherit">
+                Buy a house
+              </Link>
+              <Link href="#" color="inherit">
+                Rent a house
+              </Link>
+              <Link href="#" color="inherit">
+                Mortgage
+              </Link>
+            </Box>
+          </Hidden>
           <Button
             className={classes.btnLogin}
             variant="outlined"
@@ -94,6 +118,11 @@ const Navbar = () => {
           </Button>
         </Toolbar>
       </AppBar>
+      <ResponsiveMenuDrawer
+        isDrawerOpen={isDrawerOpen}
+        setisDrawerOpen={setisDrawerOpen}
+        toggleDrawer={toggleDrawer}
+      />
     </div>
   );
 };

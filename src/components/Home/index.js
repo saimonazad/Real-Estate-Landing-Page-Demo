@@ -5,14 +5,16 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import Container from "@material-ui/core/Container";
 //import component
 import Search from "../Search";
+import SearchResult from "../SearchResult";
 
+//styles
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 686,
-    textAlign: "center",
   },
   header: {
     marginTop: 100,
+    textAlign: "center",
   },
   title: {
     fontSize: 55,
@@ -26,8 +28,14 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.text.secondary,
     marginBottom: 40,
   },
+  result__box: {
+    marginTop: 30,
+    "& > *": {
+      marginBottom: 16,
+    },
+  },
 }));
-
+//functional component
 const HomePage = () => {
   const classes = useStyles();
 
@@ -44,6 +52,10 @@ const HomePage = () => {
           </Typography>
         </Box>
         <Search />
+        <Box className={classes.result__box}>
+          <SearchResult />
+          <SearchResult />
+        </Box>
       </Container>
     </>
   );
