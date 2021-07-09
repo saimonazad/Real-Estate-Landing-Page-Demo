@@ -96,7 +96,7 @@ const SearchResult = ({ city }) => {
             </Box>
           </Hidden>
         </Box>
-        <Hidden smUp>
+        <Hidden mdUp>
           <Accordion className={classes.accordion__root}>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
@@ -104,7 +104,7 @@ const SearchResult = ({ city }) => {
               id="panel1a-header"
             >
               <Typography className={classes.city__name} component="h3">
-                Calabasas, CA
+                {city?.city_name}, {city?.short_code}
               </Typography>
             </AccordionSummary>
             <AccordionDetails>
@@ -114,7 +114,8 @@ const SearchResult = ({ city }) => {
                   src="/assets/FilterIcon.svg"
                 />
                 <Typography component="h3">
-                  $1.5k+ / 2 Beds / Appt. ... 3 more
+                  ${city?.rate} / {city?.apartment_bed} Bed / Appt. ...
+                  {city?.find_more} more
                 </Typography>
                 <img
                   className={classes.arrow__icon}
