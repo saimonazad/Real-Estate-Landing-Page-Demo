@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Search() {
+export default function Search({ searchTerm, setSearchTerm }) {
   const classes = useStyles();
 
   return (
@@ -54,6 +54,8 @@ export default function Search() {
       </IconButton>
       <Divider className={classes.divider} orientation="vertical" />
       <InputBase
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
         className={classes.input}
         placeholder="Search for address"
         inputProps={{ "aria-label": "Search for address" }}

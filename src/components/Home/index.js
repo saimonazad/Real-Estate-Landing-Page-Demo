@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import makeStyles from "@material-ui/core/styles/makeStyles";
@@ -6,6 +6,8 @@ import Container from "@material-ui/core/Container";
 //import component
 import Search from "../Search";
 import SearchResult from "../SearchResult";
+//import http client
+import { httpClient } from "../../api/config";
 
 //styles
 const useStyles = makeStyles((theme) => ({
@@ -47,6 +49,36 @@ const useStyles = makeStyles((theme) => ({
 //functional component
 const HomePage = () => {
   const classes = useStyles();
+  //search term state
+  const [searchTerm, setSearchTerm] = useState("");
+  const [debouncedSerachTerm, setdebouncedSerachTerm] = useState(searchTerm);
+  const [results, setresults] = useState();
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      setdebouncedSerachTerm(searchTerm);
+    }, 1000);
+    return () => {
+      clearTimeout(timerId);
+    };
+  }, [searchTerm]);
+
+  useEffect(() => {
+    const search = async () => {
+      const { data, error } = await httpClient.get(
+        `/gozayaan_campaign/real_estate_list`,
+        {
+          params: {
+            city_name: debouncedSerachTerm,
+            format: "json",
+          },
+        }
+      );
+      console.log(data.data);
+    };
+    if (debouncedSerachTerm) {
+      search();
+    }
+  }, [debouncedSerachTerm]);
 
   return (
     <>
@@ -60,7 +92,7 @@ const HomePage = () => {
             cottages, villas, manors and mansions
           </Typography>
         </Box>
-        <Search />
+        <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
         <Box className={classes.result__box}>
           <SearchResult />
           <SearchResult />
