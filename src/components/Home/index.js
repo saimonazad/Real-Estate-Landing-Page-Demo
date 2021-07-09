@@ -61,7 +61,7 @@ const HomePage = () => {
   useEffect(() => {
     const timerId = setTimeout(() => {
       setdebouncedSerachTerm(searchTerm);
-    }, 1000);
+    }, 0);
     return () => {
       clearTimeout(timerId);
     };

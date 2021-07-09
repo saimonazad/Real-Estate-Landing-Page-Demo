@@ -6,6 +6,8 @@ import Button from "@material-ui/core/Button";
 import SearchIcon from "@material-ui/icons/Search";
 import IconButton from "@material-ui/core/IconButton";
 import { Box } from "@material-ui/core";
+import CancelRoundedIcon from "@material-ui/icons/CancelRounded";
+import InputAdornment from "@material-ui/core/InputAdornment";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -58,7 +60,18 @@ export default function Search({ searchTerm, setSearchTerm }) {
         onChange={(e) => setSearchTerm(e.target.value)}
         className={classes.input}
         placeholder="Search for address"
-        inputProps={{ "aria-label": "Search for address" }}
+        endAdornment={
+          searchTerm && (
+            <InputAdornment position="end">
+              <IconButton
+                aria-label="toggle password visibility"
+                onClick={() => setSearchTerm("")}
+              >
+                <CancelRoundedIcon />
+              </IconButton>
+            </InputAdornment>
+          )
+        }
       />
       <Button
         variant="contained"

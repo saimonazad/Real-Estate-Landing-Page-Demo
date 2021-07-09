@@ -9,7 +9,8 @@ const useStyles = makeStyles((theme) => ({
     backgroundImage: `url(${"/assets/home-bg.png"})`,
     backgroundSize: "cover",
     backgroundPosition: "center",
-    height: "100vh",
+    minHeight: '100vh',
+    height: "100%",
     width: "100%",
   },
 }));
