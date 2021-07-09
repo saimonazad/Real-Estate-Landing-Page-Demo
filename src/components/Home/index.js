@@ -3,6 +3,9 @@ import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Container from "@material-ui/core/Container";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Alert from "@material-ui/lab/Alert";
+
 //import component
 import Search from "../Search";
 import SearchResult from "../SearchResult";
@@ -52,7 +55,7 @@ const HomePage = () => {
   //search term state
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSerachTerm, setdebouncedSerachTerm] = useState(searchTerm);
-  const [results, setresults] = useState();
+  const [results, setresults] = useState({});
   const [loading, setloading] = useState(false);
   const [error, seterror] = useState(null);
   useEffect(() => {
@@ -75,8 +78,8 @@ const HomePage = () => {
           },
         })
         .then((res) => {
-          setloading(false);
           setresults(res.data);
+          setloading(false);
         })
         .catch((error) => {
           setloading(false);
@@ -102,7 +105,20 @@ const HomePage = () => {
         </Box>
         <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
         <Box className={classes.result__box}>
-          <SearchResult loading={loading} results={results} error={error} />
+          {loading ? (
+            <Box>
+              <CircularProgress color="primary" />
+            </Box>
+          ) : searchTerm != "" && results.result?.length == 0 ? (
+            <Alert severity="info">No city found!</Alert>
+          ) : results.error?.code != null ? (
+            <Alert severity="error">
+              {results.error.code} - {results.error.message}
+            </Alert>
+          ) : (
+            searchTerm != "" &&
+            results?.result?.map((city) => <SearchResult city={city} />)
+          )}
         </Box>
       </Container>
     </>

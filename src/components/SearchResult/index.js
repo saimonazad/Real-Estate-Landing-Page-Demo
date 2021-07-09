@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 import {
   Box,
@@ -10,7 +10,6 @@ import {
   AccordionSummary,
   AccordionDetails,
 } from "@material-ui/core";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import Alert from "@material-ui/lab/Alert";
 
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
@@ -68,83 +67,64 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 //functional component
-const SearchResult = ({ loading, results, error }) => {
+const SearchResult = ({ city }) => {
   const classes = useStyles();
-  if (loading) {
-    return (
-      <Box className={classes.loading__container}>
-        <CircularProgress color="primary" />
-      </Box>
-    );
-  }
-  if (error) {
-    return (
-      <Box>
-        <Alert severity="error">{error.message}</Alert>
-      </Box>
-    );
-  }
-  if (results && results.error.code != null) {
-    return (
-      <Box className={classes.error__container}>
-        <Alert severity="error">
-          {results.error.code} — {results.error.message}!
-        </Alert>
-      </Box>
-    );
-  }
+
   return (
     <>
       <Box>
-        <Hidden smDown>
-          <Box className={classes.root}>
-            <Typography className={classes.city__name} component="h3">
-              Calabasas, CA
-            </Typography>
-            <Box className={classes.details__box}>
-              <img
-                className={classes.filter__icon}
-                src="/assets/FilterIcon.svg"
-              />
-              <Typography component="h3">
-                $1.5k+ / 2 Beds / Appt. ... 3 more
+        <Box>
+          <Hidden smDown>
+            <Box className={classes.root}>
+              <Typography className={classes.city__name} component="h3">
+                {city?.city_name}, {city?.short_code}
               </Typography>
-              <img
-                className={classes.arrow__icon}
-                src="/assets/RightArrowIcon.svg"
-              />
+              <Box className={classes.details__box}>
+                <img
+                  className={classes.filter__icon}
+                  src="/assets/FilterIcon.svg"
+                />
+                <Typography component="h3">
+                  ${city?.rate} / {city?.apartment_bed} Bed / Appt. ...
+                  {city?.find_more} more
+                </Typography>
+                <img
+                  className={classes.arrow__icon}
+                  src="/assets/RightArrowIcon.svg"
+                />
+              </Box>
             </Box>
-          </Box>
+          </Hidden>
+        </Box>
+        <Hidden smUp>
+          <Accordion className={classes.accordion__root}>
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel1a-content"
+              id="panel1a-header"
+            >
+              <Typography className={classes.city__name} component="h3">
+                Calabasas, CA
+              </Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Box className={classes.details__box}>
+                <img
+                  className={classes.filter__icon}
+                  src="/assets/FilterIcon.svg"
+                />
+                <Typography component="h3">
+                  $1.5k+ / 2 Beds / Appt. ... 3 more
+                </Typography>
+                <img
+                  className={classes.arrow__icon}
+                  src="/assets/RightArrowIcon.svg"
+                />
+              </Box>
+            </AccordionDetails>
+          </Accordion>
         </Hidden>
       </Box>
-      <Hidden smUp>
-        <Accordion className={classes.accordion__root}>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1a-content"
-            id="panel1a-header"
-          >
-            <Typography className={classes.city__name} component="h3">
-              Calabasas, CA
-            </Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Box className={classes.details__box}>
-              <img
-                className={classes.filter__icon}
-                src="/assets/FilterIcon.svg"
-              />
-              <Typography component="h3">
-                $1.5k+ / 2 Beds / Appt. ... 3 more
-              </Typography>
-              <img
-                className={classes.arrow__icon}
-                src="/assets/RightArrowIcon.svg"
-              />
-            </Box>
-          </AccordionDetails>
-        </Accordion>
-      </Hidden>
     </>
   );
 };
