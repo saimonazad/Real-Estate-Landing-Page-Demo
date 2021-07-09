@@ -53,6 +53,8 @@ const HomePage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSerachTerm, setdebouncedSerachTerm] = useState(searchTerm);
   const [results, setresults] = useState();
+  const [loading, setloading] = useState(false);
+  const [error, seterror] = useState(null);
   useEffect(() => {
     const timerId = setTimeout(() => {
       setdebouncedSerachTerm(searchTerm);
@@ -64,16 +66,22 @@ const HomePage = () => {
 
   useEffect(() => {
     const search = async () => {
-      const { data, error } = await httpClient.get(
-        `/gozayaan_campaign/real_estate_list`,
-        {
+      setloading(true);
+      await httpClient
+        .get(`/gozayaan_campaign/real_estate_list`, {
           params: {
             city_name: debouncedSerachTerm,
             format: "json",
           },
-        }
-      );
-      console.log(data.data);
+        })
+        .then((res) => {
+          setloading(false);
+          setresults(res.data);
+        })
+        .catch((error) => {
+          setloading(false);
+          seterror(error);
+        });
     };
     if (debouncedSerachTerm) {
       search();
@@ -94,8 +102,7 @@ const HomePage = () => {
         </Box>
         <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
         <Box className={classes.result__box}>
-          <SearchResult />
-          <SearchResult />
+          <SearchResult loading={loading} results={results} error={error} />
         </Box>
       </Container>
     </>

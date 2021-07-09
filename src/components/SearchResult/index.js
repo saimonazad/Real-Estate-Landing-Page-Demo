@@ -10,6 +10,9 @@ import {
   AccordionSummary,
   AccordionDetails,
 } from "@material-ui/core";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Alert from "@material-ui/lab/Alert";
+
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 //styles
@@ -55,12 +58,41 @@ const useStyles = makeStyles((theme) => ({
       opacity: 0,
     },
   },
+  loading__container: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: theme.palette.common.white,
+    height: 60,
+  },
 }));
 
 //functional component
-const SearchResult = () => {
+const SearchResult = ({ loading, results, error }) => {
   const classes = useStyles();
-
+  if (loading) {
+    return (
+      <Box className={classes.loading__container}>
+        <CircularProgress color="primary" />
+      </Box>
+    );
+  }
+  if (error) {
+    return (
+      <Box>
+        <Alert severity="error">{error.message}</Alert>
+      </Box>
+    );
+  }
+  if (results && results.error.code != null) {
+    return (
+      <Box className={classes.error__container}>
+        <Alert severity="error">
+          {results.error.code} — {results.error.message}!
+        </Alert>
+      </Box>
+    );
+  }
   return (
     <>
       <Box>
