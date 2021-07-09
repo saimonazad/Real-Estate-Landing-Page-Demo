@@ -10,6 +10,11 @@ export default class MyDocument extends Document {
         <Head>
           {/* PWA primary color */}
           <meta name="theme-color" content={theme.palette.primary.main} />
+          <meta name="description" content="Housen Real Estate Landing page" />
+          <meta
+            property="og:description"
+            content="Housen Real Estate Landing page"
+          />
           <link rel="stylesheet" href="/fonts/fonts.css" />
 
           <link
